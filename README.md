@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/GiovanniBaccichet/openwrt-multi-sniffer">
-    <img src="media/openwrt-router.png" alt="Logo" width="200">
+    <img src="Media/openwrt-router.png" alt="Logo" width="200">
   </a>
 
   <h3 align="center">OpenWrt Multi-Channel Sniffer</h3>
