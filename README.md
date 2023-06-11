@@ -43,7 +43,7 @@ Acquired data is then saved to a remote shared folder using SMB and **Tailscale*
 
 ## Setup Overview
 
-Our setup consisted in a `Linksys MR8300 v1.1`, running `OpenWrt 22.03`. The Linksys MR8300 is a MU-MIMO Tri-Band WiFi router, which has one 2.4GHz and two 5GHz WiFi Interfaces. We chose it for the generous amount of RAM (`512 MB`) and ROM (`256 MB` of NAND) present in the system, the powerful CPU (`Qualcomm IPQ4019`), as well as the great community support.
+Our setup consisted in a `Linksys MR8300 v1.1`, running `OpenWrt 22.03.2`. The Linksys MR8300 is a MU-MIMO Tri-Band WiFi router, which has one 2.4GHz and two 5GHz WiFi Interfaces. We chose it for the generous amount of RAM (`512 MB`) and ROM (`256 MB` of NAND) present in the system, the powerful CPU (`Qualcomm IPQ4019`), as well as the great community support.
 
 Additionally it has four 1 Gbps LAN ports, one 1 Gbps WAN port, an USB 3.0 interface and four external antennas. The device is equipped with a Bluetooth chip. With all that said, it is a good fit for a lot of similar projects and applications.
 
@@ -60,13 +60,23 @@ We are interested in the Network Interface Cards (NICs) and their capabilities.
 > The first 5 GHz radio (`IPQ4019`) is limited to ch. 64 and below. The second 5 GHz radio (`QCA9888`), is limited to ch. 100 and above. This is consistent with OEM firmware and is a result of the ART data and the data in the OEM firmware's cal data. This is perhaps due to RF design optimization and/or interoperation with 2.4 GHz, such as the two, shared antennas.
 
 Considering that, with a little bit of research we can find the software interface arrangement:
-- `phy0` → 5 GHz upper wireless phy interface
-- `phy1` →	2.4 GHz wireless phy interface
-- `phy2` →	5 GHz lower wireless phy interface
+- `radio0` → 5 GHz upper wireless phy interface
+- `radio1` →	2.4 GHz wireless phy interface
+- `radio2` →	5 GHz lower wireless phy interface
 
 Both chipsets are monitor-mode capable.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Installation
+
+The script uses the Scapy Python library to sniff WiFi Probe Requests and then save them as `.pcap` Network Packet Captures.
+
+In order to install the required software, you can use the following command, accessing the router via SSH:
+
+```bash
+opkg update opkg install python opkg install python3-pip opkg install scapy pip3 install scapy pip3 install requests
+```
 
 <!-- CONTRIBUTING -->
 # Contributing
