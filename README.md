@@ -78,6 +78,8 @@ In order to install the required software, you can use the following command, ac
 opkg update opkg install python opkg install python3-pip opkg install scapy pip3 install scapy pip3 install requests
 ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- CONTRIBUTING -->
 # Contributing
 
