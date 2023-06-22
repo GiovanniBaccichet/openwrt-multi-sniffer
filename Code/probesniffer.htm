@@ -1,0 +1,35 @@
+<%
+local cjson = require "cjson"
+local json_output = cjson.decode(output or '[]')
+%>
+
+<%+header%>
+
+<h2>Probe Sniffer</h2>
+<h5>OpenWrt-based Access Point multi-channel WiFi Probe Request sniffer</h5>
+</br>
+<table class="table" id="probes">
+  <tr class="tr">
+    <th class="th">Timestamp</th>
+    <th class="th">MAC Address</th>
+    <th class="th">Signal Strength</th>
+    <th class="th">Frequency</th>
+    <th class="th">OUI Vendor</th>
+  </tr>
+  <% if next(json_output) ~= nil then
+     for _,probe in ipairs(json_output) do %>
+  <tr class="tr">
+    <td class="td"><%=probe.timestamp%></td>
+    <td class="td"><%=probe.mac%></td>
+    <td class="td"><%=probe.rssi%></td>
+    <td class="td"><%=probe.freq%></td>
+    <td class="td"><%=probe.vendor%></td>
+  </tr>
+  <% end
+  else %>
+  <tr class="tr">
+    <td class="td" colspan="5">No probe requests detected</td>
+  </tr>
+  <% end %>
+</table>
+<%+footer%>

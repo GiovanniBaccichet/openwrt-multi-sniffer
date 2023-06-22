@@ -75,8 +75,63 @@ The script uses the Scapy Python library to sniff WiFi Probe Requests and then s
 In order to install the required software, you can use the following command, accessing the router via SSH:
 
 ```bash
-opkg update opkg install python opkg install python3-pip opkg install scapy pip3 install scapy pip3 install requests
+opkg update opkg install iw opkg install tcpdump
 ```
+
+Add the following snippet to `/usr/lib/lua/luci/view/admin_menu.htm`:
+
+```html
+<li><a href="<%=luci.dispatcher.build_url("admin/services/probesniffer")%>">Probe Sniffer</a></li>
+```
+In `/usr/lib/lua/luci/view/admin_probesniffer.htm`, will be the LuCi page view (everything is in the `Code` folder). It looks like this:
+
+```html
+<%
+local util = require("luci.util")
+local json = require("luci.jsonc")
+local output = luci.dispatcher.context.requestoutput
+local data = json.parse(output.output)
+%>
+<h2>Probe Requests</h2>
+<table>
+   <tr>
+   <th>MAC Address</th>
+   <th>Vendor</th>
+   <th>Channel</th>
+   <th>RSSI</th>
+   <th>Timestamp</th>
+</tr>
+<% for _, probe in ipairs(data) do %>
+   <tr>
+      <td><%= probe.mac %></td>
+      <td><%= probe.vendor %></td>
+      <td><%= probe.channel %></td>
+      <td><%= probe.rssi %></td>
+      <td><%= probe.timestamp %></td>
+   </tr>
+<% end %>
+</table>
+```
+
+The Lua script that starts, stops and monitors the sniffer bash script is listed below and has to be placed in `/usr/lib/lua/luci/controller/probesniffer.lua`:
+
+```lua
+module("luci.controller.probesniffer", package.seeall)
+
+function index()
+   entry({"admin", "services", "probesniffer"}, call("probe_sniffer"), _("Probe Sniffer"), 60)
+end
+
+function probe_sniffer()
+   local util = require("luci.util")
+   local http = require("luci.http")
+   local output = util.exec("/root/sniffer.sh")
+   http.prepare_content("application/json")
+   http.write_json({output=output})
+end
+```
+
+The list of known MAC address vendors can be found [here](https://gitlab.com/wireshark/wireshark/-/raw/master/manuf).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

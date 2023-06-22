@@ -56,6 +56,13 @@ The ever-increasing integration of wireless technology into our everyday lives b
 
 This project aims to harness this potential by utilizing off-the-shelf hardware in combination with OpenWrt, a leading open-source router Operating System (OS). The primary goal is to develop a cost-effective and efficient system for \textbf{WiFi Probe Request frame sniffing over multiple channels}, specifically focusing on the 2.4 GHz and 5 GHz spectrum bands, traditionally used in WiFi communications. 
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.55\textwidth]{assets/2GHz-channels.png}
+    \caption{Wi-Fi channels in the 2.4 GHz band}
+    \label{fig:wifi-channels}
+\end{figure}
+
 Leveraging the inherent power and flexibility of OpenWrt, the system will be capable of capturing and analyzing WiFi Probe Request frames, thereby providing an accessible, in-depth perspective on the wireless activity in a given environment. This data can be crucial in a variety of scenarios, from troubleshooting network issues, cybersecurity investigations, to academic research, and more.
 
 The system's functionality will be presented through \textsc{OpenWrt}'s LuCi web graphical user interface (GUI), where users can view real-time data, and manage the overall operation. The user-friendly interface ensures that even those with little to no technical background can easily use the system. The collected data can be stored locally, offering an opportunity for subsequent detailed analysis or long-term trend observation.
@@ -151,7 +158,15 @@ Throughout this process, we consistently prioritized the selection and use of op
 
 \section{Results}
  
-Here is the results, include screenshots and code snippets.
+The results of our project have been both enlightening and promising. We have successfully demonstrated the viability of using open-source technology and commercially available hardware to perform WiFi Probe Request frame sniffing across multiple channels in both the 2.4 GHz and 5 GHz spectrum bands.
+
+Our setup, using the Linksys MR8300 v1.1 router running OpenWrt, has proved to be highly capable. It has shown impressive performance in capturing and processing probe request frames, leveraging the device's ample memory and powerful CPU. The data has been cleanly displayed through the LuCi web interface, making it accessible and easy to comprehend for users.
+
+Moreover, the use of technologies like Tailscale has facilitated the secure transmission of data to remote network filesystems, demonstrating the system's capability to operate over large distances, bypassing geographical constraints. This adds significant flexibility to the system and extends its potential applications.
+
+The data captured in the project has offered valuable insights into WiFi activity in our test environments. This information could have significant implications for network diagnostics, performance optimization, cybersecurity, and even research in the realm of smart cities and IoT.
+
+In conclusion, the project has yielded positive results and proven that a cost-effective, efficient, and accessible system for WiFi Probe Request frame sniffing can be built using open-source technology and commercially available hardware. Future work could focus on refining the data processing and visualization techniques, improving remote data transmission methods, and exploring other potential applications.
 
 
 %----------------------------------------------------------------------------------------
