@@ -75,7 +75,7 @@ The script uses the Scapy Python library to sniff WiFi Probe Requests and then s
 In order to install the required software, you can use the following command, accessing the router via SSH:
 
 ```bash
-opkg update opkg install iw opkg install tcpdump tailscale kmod-fs-cifs kmod-nls-base jq
+opkg update opkg install iw tcpdump tailscale kmod-fs-cifs kmod-nls-base jq
 ```
 
 The list of known MAC address vendors can be found [here](https://gitlab.com/wireshark/wireshark/-/raw/master/manuf).
