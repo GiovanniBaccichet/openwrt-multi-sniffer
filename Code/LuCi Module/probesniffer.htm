@@ -1,0 +1,43 @@
+<%
+local data = luci.util.threadlocal(_G).data
+%>
+<%+header%>
+<%+menu%>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><%:Probe Sniffer%></h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><%:MAC%></th>
+                        <th><%:RSSI%></th>
+                        <th><%:Timestamp%></th>
+                        <th><%:Vendor%></th>
+                        <th><%:Channel%></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if next(data) then %>
+                        <% for _, row in ipairs(data) do %>
+                            <tr>
+                                <td><%= row.mac %></td>
+                                <td><%= row.rssi %></td>
+                                <td><%= row.timestamp %></td>
+                                <td><%= row.vendor %></td>
+                                <td><%= row.channel %></td>
+                            </tr>
+                        <% end %>
+                    <% else %>
+                        <tr>
+                            <td colspan="5"><%:No data available.%></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%+footer%>

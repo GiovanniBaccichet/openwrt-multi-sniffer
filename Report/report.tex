@@ -64,8 +64,7 @@ This project aims to harness this potential by utilizing off-the-shelf hardware 
 \end{figure}
 
 Leveraging the inherent power and flexibility of OpenWrt, the system will be capable of capturing and analyzing WiFi Probe Request frames, thereby providing an accessible, in-depth perspective on the wireless activity in a given environment. This data can be crucial in a variety of scenarios, from troubleshooting network issues, cybersecurity investigations, to academic research, and more.
-
-The system's functionality will be presented through \textsc{OpenWrt}'s LuCi web graphical user interface (GUI), where users can view real-time data, and manage the overall operation. The user-friendly interface ensures that even those with little to no technical background can easily use the system. The collected data can be stored locally, offering an opportunity for subsequent detailed analysis or long-term trend observation.
+The collected data can be stored locally, offering an opportunity for subsequent detailed analysis or long-term trend observation.
 
 This innovative approach combines the power of open-source software with the availability and affordability of consumer hardware, opening doors for a new kind of WiFi network analysis tool. This system has vast potential for a wide array of applications, such as network performance optimization, device tracking, studying human behavior through device movement, and contributing towards the broader fields of IoT and Smart Cities.
 
@@ -82,7 +81,7 @@ This innovative approach combines the power of open-source software with the ava
 
 When a device is set to actively scan, it releases a frame called a "Probe Request". This is the station's way of declaring its presence and asking nearby networks to respond. There are two types of probe requests: a broadcast probe, which is a general call-out to any network within range, and a directed probe, which is specifically aimed at a particular network identified by its Service Set Identifier (SSID).
 
-Upon receiving a probe request, any access point (AP) within range responds with a "Probe Response" frame. This frame isn't simply an acknowledgement; it also serves as an information packet that carries specifics about the network. These specifics include the SSID, data rates that the network can support, the specific 802.11 physical layer (PHY) standard in use (like 802.11ac, 802.11n), channel usage, and much more. 
+Upon receiving a probe request, any Access Point (AP) within range responds with a "Probe Response" frame. This frame isn't simply an acknowledgement; it also serves as an information packet that carries specifics about the network. These specifics include the SSID, data rates that the network can support, the specific 802.11 physical layer (PHY) standard in use (like 802.11ac, 802.11n), channel usage, and much more. 
 
 \begin{figure}[h]
     \centering
@@ -135,7 +134,7 @@ The support and community around this device are robust, ensuring that any issue
 
 In addition to the already mentioned setup, there is potential to employ tunneling solutions such as Tailscale to transfer data to a remote network filesystem. This technology allows secure connections to be established over the internet, effectively creating a virtual network infrastructure that can span across multiple geographical locations.
 
-Tailscale is a secure network connectivity tool that leverages WireGuard, a modern, high-performance VPN protocol. It is renowned for its simplicity, speed, and security. With Tailscale, you can create a virtual private network (VPN) that connects your device to a remote network, even across NAT, firewalls, or other restrictive network environments.
+Tailscale is a secure network connectivity tool that leverages WireGuard, a modern, high-performance VPN protocol. It is renowned for its simplicity, speed, and security. With Tailscale, you can create a Virtual Private Network (VPN) that connects your device to a remote network, even across NAT, firewalls, or other restrictive network environments.
 
 In the context of our project, Tailscale can be used to securely send the collected WiFi probe request frame data from our \textsc{OpenWrt}-based device to a remote network filesystem. This could be especially useful when the system is deployed in a remote or difficult-to-access location, or if you want to aggregate data from multiple devices into a central storage location for further analysis.
 
@@ -151,8 +150,6 @@ We then developed a shell script that uses these tools to put all wireless inter
 
 To make the data more consumable, we parsed the output from \texttt{tcpdump} to extract these data fields and formatted them in a JSON structure. The JSON format was chosen because of its wide acceptance and ease of use in data handling, particularly for web-based user interfaces. 
 
-Finally, we built a module in LuCI to display this information. A new page was created to present the data in a tabular form, with columns for each data field including MAC address, vendor, channel, RSSI, and timestamp. By using Lua scripting, we were able to manipulate the JSON data and render it effectively in the LuCI interface. 
-
 Throughout this process, we consistently prioritized the selection and use of open-source and widely-used tools, enabling future adaptability and extensibility of the project. We strived to ensure efficient data capture, processing, and presentation, all contributing to the final goal of providing a robust and user-friendly WiFi probe request sniffer.
 
 
@@ -160,7 +157,7 @@ Throughout this process, we consistently prioritized the selection and use of op
  
 The results of our project have been both enlightening and promising. We have successfully demonstrated the viability of using open-source technology and commercially available hardware to perform WiFi Probe Request frame sniffing across multiple channels in both the 2.4 GHz and 5 GHz spectrum bands.
 
-Our setup, using the Linksys MR8300 v1.1 router running OpenWrt, has proved to be highly capable. It has shown impressive performance in capturing and processing probe request frames, leveraging the device's ample memory and powerful CPU. The data has been cleanly displayed through the LuCi web interface, making it accessible and easy to comprehend for users.
+Our setup, using the Linksys MR8300 v1.1 router running OpenWrt, has proved to be highly capable. It has shown impressive performance in capturing and processing probe request frames, leveraging the device's ample memory and powerful CPU.
 
 Moreover, the use of technologies like Tailscale has facilitated the secure transmission of data to remote network filesystems, demonstrating the system's capability to operate over large distances, bypassing geographical constraints. This adds significant flexibility to the system and extends its potential applications.
 

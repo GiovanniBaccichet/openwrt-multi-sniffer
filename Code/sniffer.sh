@@ -13,20 +13,11 @@ if ! hash iw 2>/dev/null; then
 fi
 
 # MAC vendor database file path
-VENDOR_DB="/usr/bin/manuf"
+VENDOR_DB="/root/manuf"
 
 # Function to get vendor from MAC address
 get_vendor() {
     local mac=$1
-    local oui=${mac:0:8}
-    local vendor=$(grep -i $oui $VENDOR_DB | cut -f 3)
-    echo $vendor
-}
-
-                                                      [ Read 100 lines ]
-^X Exit        ^O Write Out   ^W Where Is    M-Q Previous   ^K Cut         ^C Location    M-D Prev Word  ^B Back
-^L Refresh     ^R Read File   ^\ Replace     M-W Next       ^U Paste       ^/ Go To Line  M-F Next Word  ^F Forward
-  GNU nano 7.2                                                                           /usr/bin/probe-sniffer.sh
     local oui=${mac:0:8}
     local vendor=$(grep -i $oui $VENDOR_DB | cut -f 3)
     echo $vendor
@@ -82,14 +73,21 @@ get_channel() {
 sniff_probe_requests() {
     local interface=$1
     echo "Sniffing on $interface..."
-    tcpdump -l -i $interface -e -s 256 type mgt subtype probe-req -Z root | while IFS= read -r line; do
+    
+    # Get the current date and time
+    local timestamp=$(date +"%Y%m%d_%H%M%S")
+    local json_file="/root/share/OpenWRT/probe_requests_$timestamp.json"
+    
+    tcpdump -l -i $interface -e -s 256 type mgt subtype probe-req | while IFS= read -r line; do
         mac=$(echo $line | grep -oE 'SA:([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}' | cut -d ':' -f 2-)
         rssi=$(echo $line | grep -oE 'signal [[:digit:]-]+' | awk '{print $2}')
         timestamp=$(echo $line | awk '{print $1}')
         freq=$(echo $line | grep -oE '[[:digit:]]* MHz' | grep -oE '[[:digit:]]*')
         channel=$(get_channel $freq)
         vendor=$(get_vendor $mac)
-        echo "{ \"mac\": \"$mac\", \"rssi\": \"$rssi\", \"timestamp\": \"$timestamp\", \"vendor\": \"$vendor\", \"channel\": \"$channel\" }" | awk -f /root/probe-sniffer.awk -v intf=$intf > /tmp/pro>
+        
+        # Append the JSON object to the file
+        echo "{ \"mac\": \"$mac\", \"rssi\": \"$rssi\", \"timestamp\": \"$timestamp\", \"vendor\": \"$vendor\", \"channel\": \"$channel\" }" >> $json_file
     done
 }
 
@@ -106,5 +104,3 @@ done
 
 # Wait for all child processes to finish
 wait
-
-
